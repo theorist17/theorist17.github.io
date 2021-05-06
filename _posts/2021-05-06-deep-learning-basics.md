@@ -4,7 +4,7 @@ title: "Deep Learning for Natural Language Processing"
 date: 2021-05-06
 ---
 
-I would like to talk about series of topics in Deep Learning for NLP.
+I would like to talk about series of topics in DNN for NLP.
 
 1. Deep Learning Basics
 2. Word Embedding
