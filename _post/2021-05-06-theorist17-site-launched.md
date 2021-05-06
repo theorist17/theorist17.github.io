@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hong-in Lee, the theorist17, Launches Site"
+title: "Hong-in Lee, theorist17, Launches Site"
 date: 2021-05-06
 ---
 
