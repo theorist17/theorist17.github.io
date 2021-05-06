@@ -39,23 +39,23 @@ That is deep learning doesn't care about feature engineering. Let the machine fi
 
 Encoding text into vectors. e.g. Word2Vec (most popular one), GloVe, FastText
 
-Converting words into numeric representation.
+Convert words into nurmeric representation.
 
-That is input is text and output is vectors.
+The input is text, and the output is vectors.
 
 ### Why Word Embedding?
 
 Dimensionality reduction.
-Usually into 300 dimenstion.
+Usually into 300 dimension.
 
-Words in vector representation is useful.
+Words in vector representation are very useful.
 
-It let numeric opteration over words.
+It let numeric operation over words.
 
-Let assume the relation in country and its capital city
+Assume the relation in a country and its capital city
 e.g. Korea : Seoul = Japan : Tokyo
 
-And we can use the addition or reduction in word.
+And we can use the addition or reduction in words.
 Korea - Seoul + Tokyo = Japan
 
 
@@ -68,21 +68,24 @@ Use RNN, LSTM, GRU
 
 ### What are RNNs?
 
-It handles sequence of words.
+It handles a sequence of words.
 
-The hierarchi in textual information: character -> word -> sentence -> paragraph -> document
+The hierarchy in textual information: character -> word -> sentence -> paragraph -> document
 
-It handles above sentence to document level information
+It handles information from sentence level to document level.
 
 ## 4. Text Classification
 
-Sentiment analsysis, paraphrase identification, natural language inference (NLI)
+Sentiment analysis, paraphrase identification, natural language inference (NLI)
 
 Multi-task Learning
 
 ## 5. Sequence-to-Sequence Model
 
-Attention Mechanisme
+### Attention Mechanism
+
+They don't use the recursive encoding of RNNs.
+
 Machine Translation
 
 
@@ -90,24 +93,24 @@ Machine Translation
 
 Extractive answers from the passage.
 
-Answer is text span in the given passage. Question is given, the task is to select the text span in the passage, that would be the answer to the question.
+The answer is text span in the given passage. Question is given, the task is to select the text span in the passage, that would be the answer to the question.
 
-Diverse use of attention mechanism
+A diverse use of attention mechanism
 
 ### Attention as Explantion
 
 To build trustworthy AI,
 
 Machine get feedback from Human
-Human get explanation from Machine
+Human get an explanation from Machine
 
-So, somehow, we want to know why an AI model behave in such a way.
+So, somehow, we want to know why an AI model behaves in such ways.
 
-Then, it is the developer of such AI who should be responsible for a unexpected machine behavior. Somebody to blame for auto-driving accident.
+Then, it is the developer of such AI who should be responsible for an unexpected machine behavior. Somebody to blame for auto-driving accidents.
 
 ### Attention Supervision
 
-We can teach model not only by data, but by specifying the model which to attend to.
+We can teach a model not only by data, but by specifying the model which to attend to.
 
 ## 7. Transformer and Self-attention
 
@@ -115,17 +118,17 @@ Bigger models than RNNs.
 
 They use self-attention!
 
-Claiming that you don't need recursive encoding for text sequence. You only need to calculate attention of sequence against itself.
+Claiming that you don't need recursive encoding for text sequence. You only need to calculate the attention of a sequence against itself.
 
 ## 8. Language Model
 
-They suggest Transfer Leanring, which pre-train a huge model and finetune the model to fit a specific task.
+They suggest Transfer Learning, which pre-train a huge model and finetune the model to fit a specific task.
 
 e.g. GPT, BERT
 
 ### Why Pre-training?
 
-Generalization is amazing. They solve it all. Plus, GPT-2, GPT-3 are proving that building bigger model with bigger data, at some point, machine is learning something that it never seen in the data before.
+Generalization is amazing. They solve it all. Plus, GPT-2, GPT-3 are proving that building a bigger model with bigger data, at some point, the machine is learning something that it's never seen in the data before.
 
 
 ### Beyond BERT?
@@ -155,29 +158,29 @@ We are particularly interested in Knowledge Graphs
 Text is unstructurized data.
 But graphs are structurized data.
 
-Wee need to study node embeddings, edge embeddings, or even graph embeddings. How to use them?
+We need to study node embeddings, edge embeddings, or even graph embeddings. How to use them?
 
 * Graph Convolution Networks (GCN)
 * Graph Attention Networks (GAT)
 
-Use the knowledge in graph for better NLP!
+Use the knowledge in a graph for better NLP!
 
 
 ## 10. Knowledge Grounding
 
-### Knowledeg Base
+### Knowledge Base
 
-It became part of NLP. Why? The help solving NLP problems.
+It became part of NLP. Why? The helps solving NLP problems.
 
 For example, machine reasoning.
 
-They inject some knowledge from KBs into machine to solve the reasoning problems.
+They inject some knowledge from KBs into the machine to solve the reasoning problems.
 
 ### Knowledge Grounding
 
-Knowlege Base is high-level resource. Very useful!
+Knowledge Base is a high-level resource. Very useful!
 
 Data (text, image) -> Information (pattern, fusion..) -> Knowledge (KBs)
 
-How to make machine conditioned on the given knowledge base? Grounding is a technique.
+How to make the machine conditioned on the given knowledge base? Grounding is a technique.
 
