@@ -36,10 +36,11 @@ For issue #1, aggregation some groups of sequential data, converting variable-si
 
 # Process Sequences
 
+![ffn-seq-data](/assets/2021-05-22-recurrent-neural-network/ffn-seq-data.png)
 
 Features in many tasks have temporal/sequential dependencies.
 
-![ffn-seq-data](/assets/2021-05-22-recurrent-neural-network/ffn-seq-data.png)
+![rnn](/assets/2021-05-22-recurrent-neural-network/rnn.png)
 
 From left to right,
 1. one-to-one: FFN such as MNIST. Their input/output length has a fixed form. e.g. image size as input and class label as output.
