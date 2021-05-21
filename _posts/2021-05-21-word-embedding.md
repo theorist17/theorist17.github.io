@@ -21,7 +21,7 @@ So, we need a good conversion from text to vectors, and build a good neural netw
 
 ## One-hot Vector/Encoding
 
-![one-hot-vector](/assets/2021-05-06-word-embedding/one-hot-vector.png)
+![one-hot-vector](/assets/2021-05-21-word-embedding/one-hot-vector.png)
 
 Given a corpus of text, we can get the vocabulary from it (consisting of unique terms), then we set the target vector dimenstion to represnet them. If you use the one-hot encoding, the dimension is equal to the size of the vocabulary. So if your vocab are 10, then the dimension is 10. e.g. "apple" becomes 0000000001 and "banana" becomes 0000000010. Only one index is assigned with value "one", so one-hot!
 
@@ -56,7 +56,7 @@ E.g. Pricipal Component Analysis (PCA), Linear Discrimina Analysis (LDA)
 
 PCA finds a linear subspace that maximized the variance of the data once it is projected into a lower-dimensitonal space. It also minimizes the distance off the projection in a least-squares sense.
 
-![PCA](/assets/2021-05-06-word-embedding/pca.png)
+![PCA](/assets/2021-05-21-word-embedding/pca.png)
 
 
 
@@ -71,7 +71,7 @@ Manifolds hypothesis assumes that natural data often form the non-linear pattern
 
 Natural data in high dimensional spaces concentrates close to lower dimensional manifolds. Moving away from the supporting manifold (reducing dimension), probability density decreases (model becomes incorrect).
 
-![manifold](/assets/2021-05-06-word-embedding/manifold.png)
+![manifold](/assets/2021-05-21-word-embedding/manifold.png)
 
 Reducing dimension in the middle image, the distance between two points A and B, gets very bigger. This may cause problems.
 
@@ -85,7 +85,7 @@ Regarding the words, are they form the manifold pattern? or maybe uniform patter
 
 Autoencoder is a neural network designe to learn an identity function in an unsupervised way to reconstruct the original input while compressing the data in the process so as to discover a more efficient and compressed representation.
 
-![autoencoder](/assets/2021-05-06-word-embedding/autoencoder.png)
+![autoencoder](/assets/2021-05-21-word-embedding/autoencoder.png)
 
 The autoencoder was proposed by Geoffrey Hinton, that aims to learn a very good representation in a unsupervised way - it compress the data into lower dimension (in to the bottleneck!) that can be reconstructed into the original data.
 
@@ -95,13 +95,13 @@ As the variants of this vanilla autoencoder was proposed, of course, e.g. auto-e
 
 It uses mean square error as its loss function usually, as they are regarded as 'reconstruction error'. 
 
-![autoencoder](/assets/2021-05-06-word-embedding/autoencoder-mse.png)
+![autoencoder](/assets/2021-05-21-word-embedding/autoencoder-mse.png)
 
 The intuition behind this function is how original data x is different of the x that is encoded and decoded to be reconstructed.
 
 The bottlenec dimension may be, for example, 3 dimensional space. That is, any high-dimensional manifold can be represented into a lower dimension manifold.
 
-![autoencoder-train](/assets/2021-05-06-word-embedding/autoencoder-train.png)
+![autoencoder-train](/assets/2021-05-21-word-embedding/autoencoder-train.png)
 
 When you're finished the auto-encoding phase, you take the bottleneck represenatation as the input feature to the downstream task, which sounds reasonable, as they are reduced and reconstructable. Conventionally, autoencoder use small number of layers, such as 2: one for encoder and the other for decoder.
 
@@ -142,7 +142,7 @@ Then the CBOW aims to predict which word is most likely to be occur between "Pre
 As we observed the sentence, "Trump" would be appropriate.
 
 
-![cbow](/assets/2021-05-06-word-embedding/cbow.png)
+![cbow](/assets/2021-05-21-word-embedding/cbow.png)
 
 
 Here, as the candidate vocaluralies are enormously huge, we regard that there are a hypotheical finite set of words to consider the potential max pool of words. As, the ground truth label in CBOW is usually one-hot, the output of network will the dimension, same with the size of the vocabularies. 
@@ -159,7 +159,7 @@ What's another issue?
 
 Formally these two concerns hyperparameterized the shape of learnable matrix W: NxV
 
-![cbow-formulation](/assets/2021-05-06-word-embedding/cbow-formulation.png)
+![cbow-formulation](/assets/2021-05-21-word-embedding/cbow-formulation.png)
 
 V is the vocabulary size (use e.g. 5000 words) and N is the window size (encode it e.g. 200 dimension!).
 
@@ -170,7 +170,7 @@ Let's look at CBOW encoding process a little more formally.
 2. Initialize a matrix for dimenstionality reduction.
 3. Look up the hidden representations of context words.
 
-![cbow-lookup](/assets/2021-05-06-word-embedding/cbow-lookup.png)
+![cbow-lookup](/assets/2021-05-21-word-embedding/cbow-lookup.png)
 
 But on second thoughts, the W matrix is not one-hot, unless we set the dimension equal to the size of vocabulary. So, this CBOW is trying to overcome the (one-hot) sparse representation. It automatically finds dense representation in addition to contextual representation. 
 
@@ -183,7 +183,7 @@ Why is it important? CBOW is faster than autoencoder, that's why. They look-up l
 4. "Encode" into one hot represetnation and then "decode"
 5. Then we get the vocabulary index for each target word
 
-![cbow-encode-decode](/assets/2021-05-06-word-embedding/cbow-encode-decode.png)
+![cbow-encode-decode](/assets/2021-05-21-word-embedding/cbow-encode-decode.png)
 
 The big picture in CBOW is creating an aggregated vector that 1) represent the context of a word in a certain position via "look up" and 2) decode the hidden representation into the vocabulary dimension so that exact word can be obtained.
 
@@ -198,7 +198,7 @@ How about CBOW training?
 
 Compute a loss value and its gradients and backpropagate them for training. We use the softmax for activation and cross-entropy for loss function! Why? We are not reconstructing anything but predicting something, and softmax-entropy is a rule of thumb for that (if correct the entropy gets zero, which is ideal in information theory)
 
-![cbow-softmax](/assets/2021-05-06-word-embedding/cbow-softmax.png)
+![cbow-softmax](/assets/2021-05-21-word-embedding/cbow-softmax.png)
 
 We train two matrix paramter, one is for look up (V->N) in the context encoding phase, and one is the opposite (N->V) in the decoding phase. 
 
@@ -211,13 +211,13 @@ Skip-gram one of Word2Vec that is more popular than CBOW.
 
 The difference between them is that the input is not context, but target word in skip-gram.
 
-![skipgram](/assets/2021-05-06-word-embedding/skipgram.png)
+![skipgram](/assets/2021-05-21-word-embedding/skipgram.png)
 
 The sliding window for trainig sample colleciton is the same. 
 
 So given a sentence, the training samples can be the amount of possible target words in it. It's kinda data augmentation. A better result from it, despite it's more expensive in terms of computational costs.
 
-![skipgram-train](/assets/2021-05-06-word-embedding/skipgram-train.png)
+![skipgram-train](/assets/2021-05-21-word-embedding/skipgram-train.png)
 
 In its training, the two weight matrices are trained.
 
@@ -227,7 +227,7 @@ What's the difference between CBOW and Skip-gram?
 
 Predicting context words (CBOW) or target word (skip-gram) basically.
 
-![skipgram-vscbow](/assets/2021-05-06-word-embedding/skipgram-vscbow.png)
+![skipgram-vscbow](/assets/2021-05-21-word-embedding/skipgram-vscbow.png)
 
 Skip-gram is more expensive, but higher in performance (accuracy) than CBOW.
 
