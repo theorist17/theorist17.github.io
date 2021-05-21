@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Word Embedding"
-date: 2021-05-06
+date: 2021-05-21
 ---
 
 # Word Embedding
