@@ -84,3 +84,76 @@ But recent language models are not that relying on such tagged information.
 
 
 # Recurrent Neural Neworks
+
+RNNs use one single module that encode information given a time/position in temporal/sequential data.
+
+So in each neuraon of RNN, the output of previous time step is fed as input of the next time step.
+
+
+![pos](/assets/2021-05-22-recurrent-neural-network/rnn-equation.png)
+
+So it is aggregating the hidden state along every timestep following the flow of time (or sequence order).
+
+Note that we are using the same function & parameters here.
+
+![pos](/assets/2021-05-22-recurrent-neural-network/rnn-function.png)
+
+Then, the question is what is the functional form and model architecture?
+
+
+![pos](/assets/2021-05-22-recurrent-neural-network/rnn-forward.png)
+
+The W weight matrices and hidden representations are in the same variable that are used across the timesteps.
+
+Here, W_hh encodes the hidden representation that is updated previously, and the W_xh the new input, sharing the model capacity to the past information and current input.
+
+Also, tangent hyperbolic is used as non-linearity.
+
+
+### Computational Graph for RNNs?
+
+TO understand, just unroll the recursion in RNNs.
+
+![unroll](/assets/2021-05-22-recurrent-neural-network/rnn-unroll.png)
+
+The current time is t=1. The current input is x_1, where the original input was h0 (initialized by some function..). Update the h_0 to h_1, reflecting the new input in the sequence.
+
+
+
+![unroll2](/assets/2021-05-22-recurrent-neural-network/rnn-unroll2.png)
+
+And repeat the process, until the sequence ends at t=T.
+
+
+![unroll3](/assets/2021-05-22-recurrent-neural-network/rnn-unroll3.png)
+
+The most important thing is to keep the weight matrix W be a single variable that is responsible encoding and hence be the updated as the training target.
+
+For example, a text sequence data "I am happy" and current time is 2 (embedding "happy"). Without considering the "I am" that came before encoding the "happy", the target word would not be making a good sense. So we use the W weight matrix across time, they are learning the aggregation accross the time.
+
+
+### Mana to Many
+![unroll4](/assets/2021-05-22-recurrent-neural-network/rnn-unroll4.png)
+
+You can use encoder decoder architecture by employing another weight matrix W'. That is, we can use the h_t for the downstream task, that uses another set of parameters for the target task. (e.g.language model)
+
+However, the computation is not cheap here. The more time passes, backpropagation would be increasing.
+
+### The Training
+
+
+![unroll5](/assets/2021-05-22-recurrent-neural-network/rnn-unroll5.png)
+
+The label at each time step is given to supvervise the shared weight matrices.
+
+### Many to One
+
+![unroll6](/assets/2021-05-22-recurrent-neural-network/rnn-unroll6.png)
+
+We read the sequence till the end, and the only hidden representation at the final time step is used. That is we assume the variable size information is all aggregated into the final representation.
+
+
+### Take a Closer Look
+
+
+![more](/assets/2021-05-22-recurrent-neural-network/rnn-more.png)
