@@ -56,7 +56,7 @@ E.g. Pricipal Component Analysis (PCA), Linear Discrimina Analysis (LDA)
 
 PCA finds a linear subspace that maximized the variance of the data once it is projected into a lower-dimensitonal space. It also minimizes the distance off the projection in a least-squares sense.
 
-![PCA](/assets/2021-05-06-word-embedding/PCA.png)
+![PCA](/assets/2021-05-06-word-embedding/pca.png)
 
 
 
