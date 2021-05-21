@@ -71,7 +71,7 @@ Manifolds hypothesis assumes that natural data often form the non-linear pattern
 
 Natural data in high dimensional spaces contentrates close to lower dimensional manifolds. Moving away from the supporting manifold (reducing dimension), probability density decreases (model becomes incorrect).
 
-![manifold-hypo](/assets/2021-05-06-word-embedding/manifold-hypo.png)
+![manifold-hypo](/assets/2021-05-06-word-embedding/manifold.png)
 
 Reducing dimension in the middle image, the distance between two points A and B, gets very bigger. This may cause problems.
 
