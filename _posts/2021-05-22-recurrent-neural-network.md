@@ -42,7 +42,8 @@ Features in many tasks have temporal/sequential dependencies.
 
 ![rnn](/assets/2021-05-22-recurrent-neural-network/rnn.png)
 
-From left to right,
+
+For example tasks, from left to right,
 1. one-to-one: FFN such as MNIST. Their input/output length has a fixed form. e.g. image size as input and class label as output.
 2. one-to-many: here, the input length is fixed, but the output length is variable, e.g. image captioning, movie-to-genre.
 3. many-to-one: variable length input for one fixed-sized output. e.g. only the input for sentiment anlaysis is sequential text data.
