@@ -14,7 +14,7 @@ A vanilla feed forward network (FFN) recieves input with a fixed size (e.g. imag
 
 In a simplified way, FFNs are abtracted into layer levels: input layer, hidden layers, and output layer.
 
-## How  can we handle sequential data?
+## How can we handle sequential data?
 
 Such as movies, online shopping or speech recognition, the goal is to predict what is the next  given a historical information? e.g. Youtube recommendation based on your watch histories.
 
@@ -33,9 +33,8 @@ A naive approach.
 
 For issue #1, aggregation some groups of sequential data, converting variable-sized data into fixed-sized data: "Deep Neural Networks for YouTube Recommendations." However, some information in the data may be lost.
 
-# Recurrent Neural Neworks
 
-## Process Sequences
+# Process Sequences
 
 
 Features in many tasks have temporal/sequential dependencies.
@@ -84,4 +83,4 @@ But recent language models are not that relying on such tagged information.
 ![pos](/assets/2021-05-22-recurrent-neural-network/pos.png)
 
 
-## Recur
+# Recurrent Neural Neworks
