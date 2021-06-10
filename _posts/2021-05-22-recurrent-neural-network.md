@@ -14,11 +14,17 @@ A vanilla feed forward network (FFN) recieves input with a fixed size (e.g. imag
 
 In a simplified way, FFNs are abtracted into layer levels: input layer, hidden layers, and output layer.
 
+Vanilla FFNs are usually used to learn from sets of samples to induce labels.
+
 ## How can we handle sequential data?
 
-Such as movies, online shopping or speech recognition, the goal is to predict what is the next  given a historical information? e.g. Youtube recommendation based on your watch histories.
+Sometimes mere sets of samples to train a model is my not be enough.
 
+Samples are may not just indepednent and identically distributed (iid).
 
+There are may be sequetial dependence among the samples.
+
+In movies, online shopping or speech recognition, the task goal is to predict what is the next given a historical information? e.g. Youtube recommendation based on your watch histories.
 
 ## FFN for Sequential data
 
@@ -31,8 +37,9 @@ Such as movies, online shopping or speech recognition, the goal is to predict wh
 
 A naive approach.
 
-For issue #1, aggregation some groups of sequential data, converting variable-sized data into fixed-sized data: "Deep Neural Networks for YouTube Recommendations." However, some information in the data may be lost.
+For issue #1, aggregation some groups of sequential data such as averaging the some partial sequence of data, converting variable-sized data into fixed-sized data in "Deep Neural Networks for YouTube Recommendations." 
 
+However, some information in the data may be lost. That is, we may need to accumulate useful information that can be only seen through the ordering pattern of sequential samples.
 
 # Process Sequences
 
@@ -43,10 +50,10 @@ Features in many tasks have temporal/sequential dependencies.
 ![rnn](/assets/2021-05-22-recurrent-neural-network/rnn.png)
 
 
-For example tasks, from left to right,
+For the example tasks, from left to right,
 1. one-to-one: FFN such as MNIST. Their input/output length has a fixed form. e.g. image size as input and class label as output.
 2. one-to-many: here, the input length is fixed, but the output length is variable, e.g. image captioning, movie-to-genre.
-3. many-to-one: variable length input for one fixed-sized output. e.g. only the input for sentiment anlaysis is sequential text data.
+3. many-to-one: variable length input for one fixed-sized output. e.g. only the input for sentiment anlaysis is sequential text data (language input).
 4. many-to-many: both input/output of variable length (they many not have the same length), e.g. machine translation, POS tagging.
 
 
@@ -74,7 +81,7 @@ Source language -> target language (e.g. Korean -> English)
 A huge leap in NNs: Google translate, Naver Papago.
 
 
-### Part-of-speech (POS) tagging/parsing
+### Part-of-speech (POS) Tagging/Parsing
 
 Marking a word in a sentence by its role (speech tag).
 
@@ -85,16 +92,23 @@ But recent language models are not that relying on such tagged information.
 ![pos](/assets/2021-05-22-recurrent-neural-network/pos.png)
 
 
-# Recurrent Neural Neworks
+# Recurrent Neural Networks
 
-RNNs use one single module that encode information given a time/position in temporal/sequential data.
+RNNs use one single module that encodes information given a time/position in temporal/sequential data.
 
-So in each neuraon of RNN, the output of previous time step is fed as input of the next time step.
+So in each neuron of RNN, the output of the previous time step is fed as input of the next time step.
 
 
 ![pos](/assets/2021-05-22-recurrent-neural-network/rnn-equation.png)
 
+
+The abstract form of RNNs can be written as the above, where sequeces of input is process following the timestep t, and also preserving the old state to accumulate the inter-sample information.
+
+The recurrence formulara shows processing the input and accumulated information to update newly aggregated information.
+
 So it is aggregating the hidden state along every timestep following the flow of time (or sequence order).
+
+
 
 Note that we are using the same function & parameters here.
 
@@ -109,10 +123,11 @@ The W weight matrices and hidden representations are in the same variable that i
 
 Here, W_hh encodes the hidden representation that is updated previously, and the W_xh the new input, sharing the model capacity to the past information and current input.
 
-The reason to seperate two trainable wight matrices for hidden representation h_(t-1) and time-spceifc text x_(t) is 1) h and x are might not be of the same dimension 2) each weight matrix gets different roles of learning to map contextual content h and the textual content x. That is we give flexible learning room to the RNN models by giving explicitly seperating two heterogeneous inputs.
+The reason to seperate two trainable wight matrices for hidden representation h_(t-1) and time-spceifc text x_(t) is 1) h and x are might not be of the same dimension 2) each weight matrix gets different roles of learning to map contextual content h and the textual content x. That is we give flexible learning room to the RNN models by giving explicitly seperating two heterogeneous inputs. We give the neural model an experince of individually embedding over more various type of input.
 
-Also, tangent hyperbolic is used as non-linearity.
+Also, tangent hyperbolic is used as non-linearity. They have output intervals from -1 to 1, which is more suitable in a hidden layer. However we prefer sigmoid or softmax in the classification layer as they have the intervals from 0 to 1, which works well given that normal labels.
 
+The last lineary layer W_ht are the final classification layer after the non-linearity.
 
 ### Computational Graph for RNNs?
 
@@ -164,4 +179,17 @@ We read the sequence till the end, and the only hidden representation at the fin
 
 ![more](/assets/2021-05-22-recurrent-neural-network/rnn-more.png)
 
+We can understand the mechanism of RNN as a dimensionality reduction. 
+
+In this figure the input at every timestep is a word in the vocabulary (actually its corresponding word embedding i.e. Word2Vec). At each timestep, the output is a hidden representation for the input word, reduced in the dimension size. That said, note that |V| is way bigger than d.
+
+![more](/assets/2021-05-22-recurrent-neural-network/rnn-detailed.png)
+
+Then the projection into lower dimension is done by textual input embedding layer of W_{x, h}: |V| -> d and contextual input embedding layer of W_{h, h}: d -> d.
+
 Studying backpropagation in RNNs is quite complex. Studying them would not worth the effort, as the first step would be to understand the general backpropagation in LMs or SOTA models.
+
+![more](/assets/2021-05-22-recurrent-neural-network/rnn-detailed1.png)
+
+The text and context is processed via independent linear layer for x and h, with non-linearity of hyper tangent.
+
