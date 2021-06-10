@@ -105,9 +105,11 @@ Then, the question is what is the functional form and model architecture?
 
 ![pos](/assets/2021-05-22-recurrent-neural-network/rnn-forward.png)
 
-The W weight matrices and hidden representations are in the same variable that are used across the timesteps.
+The W weight matrices and hidden representations are in the same variable that is used across the timesteps.
 
 Here, W_hh encodes the hidden representation that is updated previously, and the W_xh the new input, sharing the model capacity to the past information and current input.
+
+The reason to seperate two trainable wight matrices for hidden representation h_(t-1) and time-spceifc text x_(t) is 1) h and x are might not be of the same dimension 2) each weight matrix gets different roles of learning to map contextual content h and the textual content x. That is we give flexible learning room to the RNN models by giving explicitly seperating two heterogeneous inputs.
 
 Also, tangent hyperbolic is used as non-linearity.
 
@@ -118,7 +120,7 @@ TO understand, just unroll the recursion in RNNs.
 
 ![unroll](/assets/2021-05-22-recurrent-neural-network/rnn-unroll.png)
 
-The current time is t=1. The current input is x_1, where the original input was h0 (initialized by some function..). Update the h_0 to h_1, reflecting the new input in the sequence.
+The current time is t=1. The current input is x_1, where the original input was h0 (initialized by some function). Update the h_0 to h_1, reflecting the new input in the sequence.
 
 
 
@@ -146,9 +148,11 @@ However, the computation is not cheap here. The more time passes, backpropagatio
 
 ![unroll5](/assets/2021-05-22-recurrent-neural-network/rnn-unroll5.png)
 
-The label at each time step is given to supvervise the shared weight matrices.
+The label at each time step is given to supvervise the shared weight matrices. Then the entire loss would be the sum of individual losses, that is L1 ~ LT.
 
 ### Many to One
+
+This scenario assumes tasks like sentiment analysis. The target size is fixed, not of variable length.
 
 ![unroll6](/assets/2021-05-22-recurrent-neural-network/rnn-unroll6.png)
 
@@ -159,3 +163,5 @@ We read the sequence till the end, and the only hidden representation at the fin
 
 
 ![more](/assets/2021-05-22-recurrent-neural-network/rnn-more.png)
+
+Studying backpropagation in RNNs is quite complex. Studying them would not worth the effort, as the first step would be to understand the general backpropagation in LMs or SOTA models.
