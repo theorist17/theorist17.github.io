@@ -94,8 +94,15 @@ And it's quite messy.
 The Stanford attentive reader was not only simpler but its performance gain were massive.
 
 
+
+
+# What Do The Machines Understand?
+
+What level of language understanding is needed? What have current models learned from machine reading comprehension task? 
+
 ![oops](/assets/2021-06-02-machine-reading-comprehension/understanding.png)
 
+We are going to analyze the 6 cases where the machines learn to understand from the text.
 
 ![oops](/assets/2021-06-02-machine-reading-comprehension/analysis.png)
 
@@ -111,3 +118,39 @@ So what level of lanugage understanding is needed? People analysed the CNN/Daily
 ![oops](/assets/2021-06-02-machine-reading-comprehension/analysis2.png)
 
 Data centric approach to improve the neural networks have been spotlighted, instead of model-centric progress. Historically, the progress to construct the benchmark dataset were the major efforts!
+
+# SQuAD, a QA Dataset
+
+![oops](/assets/2021-06-02-machine-reading-comprehension/realqa.png)
+
+BiLSTMs with attention models were promising at learning semantic matching. But, does it work in a more real QA setup? There is a more realistic question-answering dataset called SQuAD. In this dataset, all answers can be extracted from the passage.
+
+![oops](/assets/2021-06-02-machine-reading-comprehension/squad.png)
+
+Here, passages were collected from real-world Wikipedia articles. The questions and answers were human crowdsourced. Here, the attentive reader model for SQuAD should find the starting point and the end point for the answer on the passage sentences. Therefore, models should predict two different probability distribution for the two points identification. Basically, for the model architecture, they are basically  the same with the Stanford attentive reader. However, after the encoding, it predicts two probabilities. Unlike the previous task where we keep the sample independant entity candidates, in this task contains the answer in its passage. So, the attention mechanism to directly predict the probability of each word being the starting/ending point.
+
+
+# Case Study
+
+Here we study a common failure case.
+
+![oops](/assets/2021-06-02-machine-reading-comprehension/casestudy.png)
+
+Given the question and passage, the correct answer is 2,400, and red 7,200 text span was predicted that is an incorrect answer. This suggest that the semantic/symoblic similarity between the question and answer sentences may mislead the model prediction, as it failed to distinguish the number of faculty from that of the student. The NNs are maybe doing some kind of cheating, taking "shortcuts" patterns that trivially overlap between the two sentences.
+
+![oops](/assets/2021-06-02-machine-reading-comprehension/casestudy1.png)
+
+There is no clear explanation that San Diego is the second largest city. This kind of cases may require external knowledge.
+
+# DrQA, a Open-domain QA
+
+SQuAD is still a restricted QA setup: questions that can be answered only by span selection, not generative approach. Also as annotators can see the paragraph when writing questions, high lexical overlap between question and paragraph is observed in SQuAD samples. Can we leverage reading comprehension systems for even broader open-domain question answering?
+
+
+![oops](/assets/2021-06-02-machine-reading-comprehension/drqa.png)
+
+ In DrQA, they use a information retrieval model (BM25), which is like a search engine, to retrieve the most relevant Wikipedia article, given a question. Then they used an attentive reader to find the answer in the article.
+
+![oops](/assets/2021-06-02-machine-reading-comprehension/casestudy.png)
+
+Specifically, they also proposed some heuristics for a better embedding representation.
