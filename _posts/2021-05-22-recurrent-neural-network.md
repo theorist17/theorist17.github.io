@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Recurrent Neural Network"
+title: "Recurrent Neural Network and LSTMs"
 date: 2021-05-22
 ---
 
@@ -228,7 +228,7 @@ The key idea in LSTMs are to sense the data as a memory in computer science. The
  The pointwise operation (pink operation) and arrows show some kind of circuit board on a semi-conductive silicon that is hard-coded to efficient process temporal information, "cell state". Units in LSTM architecture serves 4 functions: forgetting, learning, and updating cell state.
 
 Specifically, the forgetting-and-learning relavant part of such circuits of the LSTMs are marked above, 
-where a high-level explanantion for the update process of cell states are drown. To implement the forgetting, they use 0-to-1 weighting by multiplication over the past information C_{t-1} and use addition of new information. As they weighting the information in the previous memory cell storages, being not to forget when the weights are 1 (positive), the forgetting is actually decides, not the degree of forgetting, but the degree of retaining the memory. But, we refer "forgetting" regardinhg its the purpose to selectively remove some temporal information.
+where a high-level explanation for the update process of cell states are drawn. To implement the forgetting, they use 0-to-1 weighting by multiplication over the past information C_{t-1} and use addition of new information embedding. As LSTMs weight the information in the previous memory cell storages, being not to forget, but to remember all when the weights are 1 (positive), the forgetting  actually decides, not the degree of forgetting, but the degree of retaining the memory. But, we refer "forgetting" regarding its  purpose of selectively removing some temporal information.
 
 
 ## Forget and Input Gates
@@ -237,15 +237,18 @@ where a high-level explanantion for the update process of cell states are drown.
 
 The forget function is implemented by the neural parameters W_f, b_f in the first block. The learning function is done by the W_i, b_i, where they use the input at newly learned data at the time t. That is, the information in the memory cells are process in a hardcoded firmware that these two forget/input gates are supposed to learn to efficiently update them. 
 
-Specifically, beside the work of the input gates, where it decides the importance of current input data, LSTMs employed another layer W_c, b_c that prepares a informational increment (denoted as C_tilda) that serves as update patch content based on the current input. This gate only considers the hidden representation and current input, and not the previous cell states, to prepare an update patch of new inforamtion for the previous cell state. They use tanh as a activation function so that the the update patch forms the range between -1 and 1, representing both additive and reductive properties of new experience. Being negative in the new cell state increment doesn't mean they forget. Tanh allows rather more manipulative updates, being not only positive but negative also values.
+Specifically, beside the work of the input gates, where it decides the importance of current input data, LSTMs employed another layer W_c, b_c that prepares a informational increment (denoted as C_tilda) that serves as update patch content based on the current input. This gate only considers the hidden representation and current input, and not the previous cell states, to prepare an update patch of new inforamtion for the previous cell state. They use tanh as a activation function so that the the update patch forms the range between -1 and 1, representing both additive and reductive properties of new experience. Being negative in the new cell state increment doesn't mean they forget. Tanh allows rather more manipulative updates, being not only positive but also negative values.
 
 However, these are just architectural choices, where no standard answer is set. What's important in LSTMs is that data in cells can be, and should be, processed to be seletively preserved.
 
+## Updating Cell State
 
 ![more](/assets/2021-05-22-recurrent-neural-network/lstm2.png)
 
 The way to update the previous cell state is very simple. Given the selectively forgotten (retained) cell state based on the weighting (multiplcation) over the previous cell state, and the selectively forgatten cell state based on the weighting over the current cell state (C_tilda), we only need to add them. We already prepared the positive-negative forms of state update patch in prior (W_c, b_c).
 
+
+## Output Gates
 
 ![more](/assets/2021-05-22-recurrent-neural-network/lstm3.png)
 
